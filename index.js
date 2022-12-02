@@ -59,6 +59,9 @@ function currentTimeAngles(timeOffset){
     //account for time zone changes
     times.hour += timeOffset;
 
+    //override hour with local time because currently broken
+    times.hour = new Date().getHours();
+
     //convert segments into rotational values
     times.second = (times.second % 60) * 6;
     times.minute = (times.minute % 60) * 6;
