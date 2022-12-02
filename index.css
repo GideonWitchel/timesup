@@ -1,0 +1,81 @@
+body{
+    width: 100%;
+    font-family: "Timews New Roman", Times, serif;
+    white-space: nowrap;
+    background: palevioletred;
+}
+.clock {
+    height: 10em;
+    width: 10em;
+    background-color: #333;
+    border-radius: 50%;
+}
+.clock-main {
+    position:relative;
+    height: 9em;
+    width: 9em;
+    background-color: #bbb;
+    border-radius: 50%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    transform:translate(5%, 5%);
+}
+/*
+Clock ticks broke when making clocks relative.
+Low priority to fix because purely aesthetic.
+*/
+.clock-tick{
+    position: relative;
+    height: 2.25em;
+    width: 2.25em;
+    background-color: #fff;
+    border-radius: 50%;
+    transform-origin: 50% 5em;
+    z-index: 1;
+}
+
+.clock-center{
+    position:relative;
+    transform:translate(50%,0%);
+    height: 0.75em;
+    width: 0.75em;
+    background-color: #666;
+    border-radius: 50%;
+    z-index: 1;
+}
+/*
+The translation values are slightly off for the clock hands currently.
+Not sure how to do them automatically with percentages.
+Maybe just fine tune manually?
+ */
+.clock-hour{
+    position:relative;
+    top: -1.9em;
+    left:-0.16em;
+    height:4em;
+    width:0.35em;
+    background-color: red;
+    border-radius: 1em;
+    transform-origin: 50% 4em;
+}
+.clock-minute{
+    position:relative;
+    top: -1.2em;
+    left:-0.4em;
+    height:2.5em;
+    width:0.2em;
+    background-color: blue;
+    border-radius: 1em;
+    transform-origin: 50% 2.5em;
+}
+.clock-second{
+    position:relative;
+    top: -1.7em;
+    left: -0.6em;
+    height:3.5em;
+    width:0.1em;
+    background-color: darkslategray;
+    border-radius: 1em;
+    transform-origin: 50% 3.5em;
+}
