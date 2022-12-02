@@ -4,6 +4,24 @@ body{
     white-space: nowrap;
     background: palevioletred;
 }
+table{
+    position:absolute;
+    left:0px;
+    right:0px;
+    top:0px;
+    bottom:0px;
+    table-layout:fixed;
+}
+
+tr{
+    width: 10em;
+    height: 10em;
+}
+td{
+    width: 10em;
+    height: 10em;
+}
+
 .clock {
     height: 10em;
     width: 10em;
@@ -24,7 +42,7 @@ body{
 /*
 Clock ticks broke when making clocks relative.
 Low priority to fix because purely aesthetic.
-*/
+
 .clock-tick{
     position: relative;
     height: 2.25em;
@@ -34,6 +52,7 @@ Low priority to fix because purely aesthetic.
     transform-origin: 50% 5em;
     z-index: 1;
 }
+*/
 
 .clock-center{
     position:relative;

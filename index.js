@@ -6,29 +6,31 @@ ROW / COL is the number of th respective row or column
 the table is called clocks
 */
 
+//this is also the number of rows, because rows are seen as the number of clocks stacked vertically
+let numClocksVert = 2;
+//this is also the number of columns for the same reason
+let numClocksHoriz = 2;
+
+//if this is anything other than 1, the clocks will obviously not be accurate
+let timeMultiplier = 1;
+
 //6 is just UTC, temporary
 const timeOffset = +12;
 
-//milliseconds
+//How often the clocks will update to reflect the backend time (in milliseconds)
 const tickSpeed = 50;
+
+//for monitoring and triggering events based on the number of removed clocks if their positions are irrelevant
+let numClocks = numClocksHoriz*numClocksVert;
+
+//in menus and win stuff, don't trigger actions
+let freezeState = false;
 
 //I hate that this is RGB and not hex but that's how chrome displays it
 //I need to match chrome for later comparisons when cycling
-const colors = ["rgb(231, 76, 60)", "rgb(243, 156, 18)", "rgb(244, 208, 63)", "rgb(46, 204, 113)", "rgb(41, 128, 185)", "rgb(142, 68, 173)", "#bbb"];
-/*
-const innercode = `
-        <div class="clock-main">
-            <div class="clock-center"></div>
-            <span class="clock-hour" style="transform: rotate(0deg);"></span>
-            <span class="clock-minute" style="transform: rotate(90deg);"></span>
-            <span class="clock-second" style="transform: rotate(135deg);"></span>
-        </div>
-    `;
-*/
+const colors = ["rgb(231, 76, 60)", "rgb(243, 156, 18)", "rgb(244, 208, 63)", "rgb(46, 204, 113)", "rgb(41, 128, 185)", "rgb(142, 68, 173)"];
 
-//if this is anything other than 1, the clocks will not be accurate (obviously)
-let timeMultiplier = 1;
-
+//I know this isn't 100% secure, but it's really convenient for now
 function fullClockCode(rowNum, colNum){
     //start the clock with the correct time
     let timeAngles = currentTimeAngles(timeOffset);
@@ -44,11 +46,6 @@ function fullClockCode(rowNum, colNum){
          `;
 };
 
-//this is also the number of rows, because rows are seen as the number of clocks stacked vertically
-const numClocksVert = 5;
-//this is also the number of columns for the same reason
-const numClocksHoriz = 9;
-
 function currentTimeAngles(timeOffset){
     //timeMultiplier = $("#speedInput").sl;
     //console.log(timeMultiplier);
@@ -60,7 +57,7 @@ function currentTimeAngles(timeOffset){
     times.hour = Math.floor(times.minute / 60);
 
     //account for time zone changes
-    times.hour = times.hour+timeOffset;
+    times.hour += timeOffset;
 
     //convert segments into rotational values
     times.second = (times.second % 60) * 6;
@@ -72,26 +69,6 @@ function currentTimeAngles(timeOffset){
 async function updateClock() {
     let timeAngles = currentTimeAngles(timeOffset);
 
-    /*
-    //apply rotations to all clocks without knowing how many there are
-    //only works if there are clocks in every position
-    //I could fix it breaking rows with gaps via tombstones
-    //but am opting to use for loops because we know the table parameters
-    let row = 0;
-    let col = 0;
-    while(document.getElementById("clocks-"+row)){
-        console.log("clock-"+row+"-"+col);
-        console.log(document.getElementById("clock-"+row+"-"+col));
-        while(document.getElementById("clock-"+row+"-"+col)) {
-            console.log("setting")
-            setHands("clock-" + row + "-" + col, h, m, s);
-            col++;
-        }
-        col = 0;
-        row++;
-    }
-    */
-
     //apply rotations to all clocks while knowing how many there are
     for(let row = 0; row < numClocksVert; row++){
         for(let col = 0; col < numClocksHoriz; col++){
@@ -101,6 +78,7 @@ async function updateClock() {
             }
         }
     }
+
     //asynchronously repeat forever
     setTimeout(() => updateClock(), tickSpeed);
 };
@@ -114,17 +92,6 @@ function setHands(id, h, m, s){
     minute.style.transform = 'rotate(' + m + 'deg)';
     second.style.transform = 'rotate(' + s + 'deg)';
 };
-
-/*
-function createNewClock(rowNum, colNum){
-    //naming convention is clock-ROW-COL
-    let newClock = document.createElement("div");
-    newClock.classList.add("clock");
-    newClock.id = "clock-" + rowNum +"-"+colNum;
-    newClock.innerHTML = innercode;
-    return newClock;
-};
-*/
 
 function createNewRow(rowNum){
     //naming convention is clocks-ROW
@@ -140,7 +107,7 @@ function createNewCol(rowNum, colNum){
     return newCol;
 };
 
-function setupClocks(){
+function setPadding(){
     //get window pixel values and convert to em because that's how I'm doing clock sizes
     let winXem = window.innerWidth/ parseFloat(
         getComputedStyle(
@@ -153,9 +120,13 @@ function setupClocks(){
         )['font-size']
     );
 
+    //For some reason default padding is slightly off - maybe device/browser specific?
+    //I think the slight misalignment is worth compatability with all screen and table sizes
+    //this would fix it, but makes bigger tables go off screen
+    //winYem -= 1.4;
+    //winXem -= 1.4;
+
     //multiply number by 10 because they are 10em tall each
-    //subtract a couple because by default there's a bit too much
-    winYem = winYem-2;
     //divide by 2 to split the padding on both sides (right/left and top/bottom)
     //may be changed or dynamically assigned based on screen size in the future
     //right now this only changes once at the start, so if the window isn't fullscreen and/or changes size it will break
@@ -164,14 +135,21 @@ function setupClocks(){
     let divHorizPadding = (winXem-(numClocksHoriz*10))/2;
     document.getElementById("clocks").style.margin = ""+divVertPadding+"em "+divHorizPadding+"em";
 
+};
+
+function setupClocks(){
+    setPadding();
+
     //start at the first row
     let currentNode = document.getElementById("clocks-0");
 
     //draw the clocks
     //this is done in such a static table instead of through flexbox because I want to be able to change specific clock positions easily
     for(let rowNum = 0; rowNum < numClocksVert; rowNum++) {
-        //Create the first col and set the currentNode to that first col
-        currentNode.appendChild(createNewCol(rowNum, 0));
+        //Create the first col and set the currentNode to that first col, if needed
+        if(!currentNode.firstChild) {
+            currentNode.appendChild(createNewCol(rowNum, 0));
+        }
         currentNode = currentNode.firstChild;
 
         for (let colNum = 0; colNum < numClocksHoriz; colNum++) {
@@ -179,22 +157,35 @@ function setupClocks(){
 
             //I don't think I can do this one with children because it's looking for data, but innerHTML is a bit insecure
             currentNode.innerHTML = fullClockCode(rowNum, colNum);
-            //currentNode.appendChild(createNewClock(rowNum, colNum));
 
             //the node is the first col in the row, so we must create a new col from the parent node
-            //this will currently create a garbage extra column. ***FIX***
-            currentNode.parentNode.appendChild(createNewCol(rowNum, colNum+1));
-            //navigate to the next column
-            currentNode = currentNode.nextElementSibling;
+            //this whole thing is avoiding an off by 1 and/or if the table already exists
+            if(colNum < numClocksHoriz-1) {
+                //only make a new col if needed
+                if(!currentNode.nextElementSibling) {
+                    currentNode.parentNode.appendChild(createNewCol(rowNum, colNum + 1));
+                }
+                //navigate to the next column
+                currentNode = currentNode.nextElementSibling;
+            }
         }
+        //the off by 1 in the loop and this is to avoid creating garbage extra columns
+        currentNode.innerHTML = fullClockCode(rowNum, numClocksHoriz-1);
+
         //navigate to the current row
         currentNode = currentNode.parentNode;
-        //create a new row
-        //this will currently create a garbage extra row. ***FIX***
-        currentNode.parentNode.appendChild(createNewRow(rowNum+1));
-        //navigate to the next row
-        currentNode = currentNode.nextElementSibling;
+        //create a new row, iff needed; avoids similar off by 1
+        if(rowNum < numClocksVert-1) {
+            //if there isn't already another row, make one
+            if(!currentNode.nextElementSibling) {
+                currentNode.parentNode.appendChild(createNewRow(rowNum + 1));
+            }
+            //navigate to the next row
+            currentNode = currentNode.nextElementSibling;
+        }
     }
+
+    numClocks = numClocksHoriz*numClocksVert;
 };
 
 
@@ -205,12 +196,14 @@ function getTableLocation(row, col){
 function clearTableLocation(row, col){
     let tableSpot = getTableLocation(row, col);
     tableSpot.innerHTML = "";
+    numClocks--;
 };
 
 function fillTableLocation(row, col, getTypeFunc){
     //getTypeFunc is a function to get the innerHTML of the desired inserted object
     let tableSpot = getTableLocation(row, col);
     tableSpot.innerHTML = getTypeFunc(row, col);
+    numClocks++;
 };
 
 function toggleTableLocation(row, col, getTypeFunc){
@@ -218,9 +211,11 @@ function toggleTableLocation(row, col, getTypeFunc){
     let tableSpot = getTableLocation(row, col);
     if(tableSpot.innerHTML === ""){
         tableSpot.innerHTML = getTypeFunc(row, col);
+        numClocks++;
     }
     else{
         tableSpot.innerHTML = "";
+        numClocks--;
     }
 };
 
@@ -239,15 +234,38 @@ function clickToggleHandler(e){
 };
 */
 
+function cycleColor(targetCell){
+    let background = targetCell.firstChild.nextElementSibling.firstChild.nextElementSibling;
+    let colorIndex = 0;
+    //initially there is no backgroundColor attribute, so it defaults to index 0 in the list of colors
+    if(background.style.backgroundColor){
+        //if it's the last color, delete the clock instead of toggling
+        if(colors.indexOf(background.style.backgroundColor) === colors.length-1){
+            targetCell.innerHTML = "";
+            numClocks--;
+            return;
+        }
+        //if there is a background color attribute, find the next one in the list
+        colorIndex = (colors.indexOf(background.style.backgroundColor) + 1) % colors.length;
+    }
+    //update the color to the new one
+    background.style.backgroundColor = colors[colorIndex];
+}
+
 function clickColorHandler(e){
+    if(freezeState){return;}
+
     let clicked = e.target;
-    //if not actually clicking on the clock, add the clock back if it doesn't exist or don't do anything if it does exist
+    //if not actually clicking on the clock (clicking background space)
     if(clicked.className === ""){
+        //add the clock back if it doesn't exist
         if(!clicked.firstChild){
             let row = clicked.id.split("-")[1];
             let col = clicked.id.split("-")[2];
             clicked.innerHTML = fullClockCode(row, col);
+            numClocks++;
         }
+        //or do nothing if it does exist and the user just didn't click it
         return;
     }
 
@@ -256,34 +274,55 @@ function clickColorHandler(e){
         clicked = clicked.parentNode;
     }
 
-    //toggle it
-    let background = clicked.firstChild.nextElementSibling.firstChild.nextElementSibling;
-    let colorIndex = 0;
-    if(background.style.backgroundColor){
-        console.log(background.style.backgroundColor);
-        colorIndex = (colors.indexOf(background.style.backgroundColor)+1)%colors.length;
-    }
-    //if it's the last color, delete the clock instead of toggling
-    if(colorIndex === colors.length-1){
-        clicked.innerHTML = "";
-    }
-    else {
-        background.style.backgroundColor = colors[colorIndex];
+    cycleColor(clicked);
+    checkSpecialEvents();
+};
+
+function checkSpecialEvents(){
+    if (numClocks === 0){
+        freezeState = true;
+        setupClocks();
+        bigRainbowClocks(0);
     }
 };
 
+function bigRainbowClocks(colorNum){
+    if(colorNum < colors.length) {
+        for (let row = 0; row < numClocksVert; row++) {
+            for (let col = 0; col < numClocksHoriz; col++) {
+                cycleColor(document.getElementById("clocks-" + row + "-" + col));
+            }
+        }
+    }
+    //if at end of array, end with 1 bigger sized sides for the clocks
+    if(colorNum >= colors.length)
+    {
+        numClocksVert += 1;
+        numClocksHoriz += 1;
+        setupClocks();
+        freezeState = false;
+        return;
+    }
 
+    //otherwise continue
+    colorNum++;
+    //arbitrary 100ms between colors
+    setTimeout(() => bigRainbowClocks(colorNum), 100);
+}
 
-window.onload = function(){
+window.addEventListener("load", function(){
     //fill the screen with clocks based on current number of pixels
     setupClocks();
     //set the clocks to the current time
     //this will asynchronously repeat forever
     updateClock();
     //toggle clocks on click
-    //document.getElementById('clocks').addEventListener('click', clickToggleHandler, false);
+    //document.getElementById('clocks').addEventListener('click', clickToggleHandler);
 
-    //cycles colors
-    document.getElementById('clocks').addEventListener('click', clickColorHandler, false);
+    //cycle colors when clicked
+    document.getElementById('clocks').addEventListener('click', clickColorHandler);
 
-};
+});
+
+//keep the table centered as the window gets moved
+window.addEventListener("resize", function() {setPadding();});
