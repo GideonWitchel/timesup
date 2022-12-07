@@ -17,12 +17,60 @@
 </head>
 <body id="body">
 <div id="speed-div">
-    <input type="range" class="form-range" min="1" max="1000" id="speed-input" oninput="">
+    <label for="speed-input" class="form-label" id="speed-label">Time Multiplier - 1x - Real Time</label>
+    <input type="range" class="form-range" min="1" max="999" id="speed-input" value="1">
 </div>
 <table id="clocks">
     <tr id="clocks-0"></tr>
 </table>
+<div class="btn-toolbar fixed-bottom justify-content-between" role="toolbar">
+    <button type="button col-1" class="btn btn-danger" data-toggle="button" aria-pressed="false" autocomplete="off">
+        Reset
+    </button>
+    <div class="btn-group col-6" role="group" aria-label="ex">
+        <button type="button" class="btn btn-primary col-5" data-toggle="button" aria-pressed="false" autocomplete="off" data-bs-toggle="modal" data-bs-target="#settings-modal">
+            Settings
+        </button>
+        <button type="button" class="btn btn-warning col-1" data-toggle="button" aria-pressed="false" autocomplete="off">
+            Music
+        </button>
+    </div>
+</div>
+<div class="modal" id="settings-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Settings</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
 
+            <div class="modal-body">
+                <p>Welcome! <b>Click</b> the <b>clocks</b> and <i>enjoy</i> the <i>tunes</i>.</p>
+                <p class="small">There are no secrets here...</p>
+                <br>
+                <div class="form-group">
+                    <label for="speed-input-manual">Clock Speed Multiplier</label>
+                    <input class="form-control" type="text" id="speed-input-manual" placeholder="1">
+                </div>
+                <div class="form-group">
+                    <label for="music-picker">Music Picker</label>
+                    <select class="form-select" type="text" id="music-picker" placeholder="1">
+                        <option selected value="0">Default Song</option>
+                        <option value="1">Song 1</option>
+                        <option value="2">Song 2</option>
+                        <option value="3">Song 3</option>
+                    </select>
+                </div>
+            </div>
 
+            <div class="modal-footer justify-content-between">
+                <p>Time's Up!</p>
+                <p>Created by Gideon Witchel</p>
+                <p>2022</p>
+            </div>
+
+        </div>
+    </div>
+</div>
 </body>
 </html>

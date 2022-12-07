@@ -23,13 +23,24 @@ td{
 }
 
 .form-range{
+    margin: 5px auto;
+    max-width:40em;
+}
+.form-label {
     margin: 50px auto;
     align-items:center;
     max-width:40em;
+    font-size: 1.5em;
+    font-weight: bold;
 }
 
 #speed-div{
     display:flex;
+    flex-flow: column;
+}
+
+#settings-div{
+    display: flex;
 }
 
 .clock {

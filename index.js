@@ -49,7 +49,7 @@ function fullClockCode(rowNum, colNum){
 function currentTimeAngles(timeOffset){
     //timeMultiplier = $("#speedInput").sl;
     //console.log(timeMultiplier);
-    let times = {"hour":0, "minute":0, "second":0}
+    let times = {"hour":0, "minute":0, "second":0};
 
     //split unix time into segments
     times.second = Math.floor(Date.now() / (1000/timeMultiplier));
@@ -59,8 +59,11 @@ function currentTimeAngles(timeOffset){
     //account for time zone changes
     times.hour += timeOffset;
 
-    //override hour with local time because currently broken
-    times.hour = new Date().getHours();
+    //triple equals is never true after the val is changed
+    if(timeMultiplier == 1) {
+        //override hour with local time because currently broken
+        times.hour = new Date().getHours();
+    }
 
     //convert segments into rotational values
     times.second = (times.second % 60) * 6;
@@ -238,7 +241,7 @@ function cycleColor(targetCell){
     }
     //update the color to the new one
     background.style.backgroundColor = colors[colorIndex];
-}
+};
 
 function clickColorHandler(e){
     if(freezeState){return;}
@@ -299,8 +302,26 @@ function bigRainbowClocks(colorNum){
 };
 
 function updateSpeed(){
-    console.log("hi");
+    timeMultiplier = document.getElementById('speed-input').value;
+    document.getElementById("speed-input-manual").placeholder = timeMultiplier;
+    if(timeMultiplier == 1){
+        document.getElementById('speed-label').textContent = "Time Multiplier - 1x - Real Time";
+    }
+    else {
+        document.getElementById('speed-label').textContent = "Time Multiplier - " + timeMultiplier + "x - Not Real Time";
+    }
 };
+
+function updateSpeedManual(){
+    timeMultiplier = document.getElementById('speed-input-manual').value;
+    document.getElementById("speed-input").value = timeMultiplier;
+    if(timeMultiplier == 1){
+        document.getElementById('speed-label').textContent = "Time Multiplier - 1x - Real Time";
+    }
+    else {
+        document.getElementById('speed-label').textContent = "Time Multiplier - " + timeMultiplier + "x - Not Real Time";
+    }
+}
 
 window.addEventListener("load", function(){
     //fill the screen with clocks based on current number of pixels
@@ -313,8 +334,10 @@ window.addEventListener("load", function(){
 
     //cycle colors when clicked
     document.getElementById('clocks').addEventListener('click', clickColorHandler);
-
-    //$('.form-range').on('slide', updateSpeed);
+    //monitor speed slider
+    document.getElementById('speed-input').addEventListener('change', updateSpeed);
+    //monitor speed settings menu
+    document.getElementById('speed-input-manual').addEventListener('change', updateSpeedManual);
 });
 
 //keep the table centered as the window gets moved
