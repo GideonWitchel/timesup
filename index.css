@@ -1,4 +1,4 @@
-body{
+#body{
     width: 100%;
     font-family: "Timews New Roman", Times, serif;
     white-space: nowrap;
@@ -15,11 +15,21 @@ table{
 
 tr{
     width: 10em;
-    height: 10em;
+    height: 10.1em;
 }
 td{
     width: 10em;
-    height: 10em;
+    height: 10.1em;
+}
+
+.form-range{
+    margin: 50px auto;
+    align-items:center;
+    max-width:40em;
+}
+
+#speed-div{
+    display:flex;
 }
 
 .clock {
@@ -39,6 +49,7 @@ td{
     align-items: center;
     transform:translate(5%, 5%);
 }
+
 /*
 Clock ticks broke when making clocks relative.
 Low priority to fix because purely aesthetic.
@@ -63,25 +74,27 @@ Low priority to fix because purely aesthetic.
     border-radius: 50%;
     z-index: 1;
 }
+
 /*
 The translation values are slightly off for the clock hands currently.
 Not sure how to do them automatically with percentages.
 Maybe just fine tune manually?
  */
-.clock-hour{
+
+.clock-minute{
     position:relative;
-    top: -1.9em;
-    left:-0.16em;
+    top: -2.05em;
+    left:-0.4em;
     height:4em;
-    width:0.35em;
+    width:0.3em;
     background-color: red;
     border-radius: 1em;
     transform-origin: 50% 4em;
 }
-.clock-minute{
+.clock-hour{
     position:relative;
-    top: -1.2em;
-    left:-0.4em;
+    top: -1.3em;
+    left:-0.1em;
     height:2.5em;
     width:0.2em;
     background-color: blue;

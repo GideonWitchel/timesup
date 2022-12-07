@@ -222,21 +222,6 @@ function toggleTableLocation(row, col, getTypeFunc){
     }
 };
 
-/*
-function clickToggleHandler(e){
-    let clicked = e.target;
-    //navigate up to the table location from whatever the target it
-    while(clicked.className !== ""){
-        clicked = clicked.parentNode;
-    }
-
-    //toggle it
-    let row = clicked.id.split("-")[1];
-    let col = clicked.id.split("-")[2];
-    toggleTableLocation(row, col, fullClockCode);
-};
-*/
-
 function cycleColor(targetCell){
     let background = targetCell.firstChild.nextElementSibling.firstChild.nextElementSibling;
     let colorIndex = 0;
@@ -311,7 +296,11 @@ function bigRainbowClocks(colorNum){
     colorNum++;
     //arbitrary 100ms between colors
     setTimeout(() => bigRainbowClocks(colorNum), 100);
-}
+};
+
+function updateSpeed(){
+    console.log("hi");
+};
 
 window.addEventListener("load", function(){
     //fill the screen with clocks based on current number of pixels
@@ -325,6 +314,7 @@ window.addEventListener("load", function(){
     //cycle colors when clicked
     document.getElementById('clocks').addEventListener('click', clickColorHandler);
 
+    //$('.form-range').on('slide', updateSpeed);
 });
 
 //keep the table centered as the window gets moved
