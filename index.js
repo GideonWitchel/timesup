@@ -302,25 +302,44 @@ function bigRainbowClocks(colorNum){
 };
 
 function updateSpeed(){
-    timeMultiplier = document.getElementById('speed-input').value;
-    document.getElementById("speed-input-manual").placeholder = timeMultiplier;
-    if(timeMultiplier == 1){
-        document.getElementById('speed-label').textContent = "Time Multiplier - 1x - Real Time";
-    }
-    else {
-        document.getElementById('speed-label').textContent = "Time Multiplier - " + timeMultiplier + "x - Not Real Time";
-    }
+    syncSpeed(document.getElementById('speed-input').value);
 };
 
+
 function updateSpeedManual(){
-    timeMultiplier = document.getElementById('speed-input-manual').value;
+    syncSpeed(document.getElementById('speed-input-manual').value);
+}
+
+function syncSpeed(newSpeed){
+    //sanitize
+    if(isNaN(parseInt(newSpeed))){
+        return;
+    }
+    timeMultiplier = newSpeed;
+
+    //update all other parts of the website that reflect the speed
     document.getElementById("speed-input").value = timeMultiplier;
+    document.getElementById("speed-input-manual").placeholder = timeMultiplier;
+    document.getElementById("speed-input-manual").value = timeMultiplier;
+
     if(timeMultiplier == 1){
-        document.getElementById('speed-label').textContent = "Time Multiplier - 1x - Real Time";
+        document.getElementById('speed-label').textContent = "Time Multiplier | 1x | Real Time";
     }
     else {
-        document.getElementById('speed-label').textContent = "Time Multiplier - " + timeMultiplier + "x - Not Real Time";
+        document.getElementById('speed-label').textContent = "Time Multiplier | " + timeMultiplier + "x | Not Real Time";
     }
+}
+
+function resetClocks(){
+    document.getElementById('clocks').innerHTML ='<tr id=\"clocks-0\"></tr>';
+    syncSpeed(1);
+    setupClocks();
+}
+
+function hardResetClocks(){
+    numClocksVert = 2;
+    numClocksHoriz = 2;
+    resetClocks();
 }
 
 window.addEventListener("load", function(){
@@ -329,15 +348,17 @@ window.addEventListener("load", function(){
     //set the clocks to the current time
     //this will asynchronously repeat forever
     updateClock();
-    //toggle clocks on click
-    //document.getElementById('clocks').addEventListener('click', clickToggleHandler);
-
+    
     //cycle colors when clicked
     document.getElementById('clocks').addEventListener('click', clickColorHandler);
     //monitor speed slider
     document.getElementById('speed-input').addEventListener('change', updateSpeed);
     //monitor speed settings menu
     document.getElementById('speed-input-manual').addEventListener('change', updateSpeedManual);
+    //monitor reset button
+    document.getElementById('reset-button').addEventListener('click', resetClocks);
+    //monitor hard reset button
+    document.getElementById('hard-reset-button').addEventListener('click', hardResetClocks);
 });
 
 //keep the table centered as the window gets moved
