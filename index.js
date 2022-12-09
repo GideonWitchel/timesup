@@ -26,6 +26,11 @@ let numClocks = numClocksHoriz*numClocksVert;
 //in menus and win stuff, don't trigger actions
 let freezeState = false;
 
+//score calculation: Each time color changes adds to score. Multiplier is 2x for each time the grid gets bigger.
+// Big bonus for clearing stage (equal to everything you got before)
+//currently multiplier is just numClocksVert
+let score = 0;
+
 //I hate that this is RGB and not hex but that's how chrome displays it
 //I need to match chrome for later comparisons when cycling
 const colors = ["rgb(231, 76, 60)", "rgb(243, 156, 18)", "rgb(244, 208, 63)", "rgb(46, 204, 113)", "rgb(41, 128, 185)", "rgb(142, 68, 173)"];
@@ -45,6 +50,15 @@ function fullClockCode(rowNum, colNum){
          </div>
          `;
 };
+
+function addScore(){
+    score += Math.pow(2, numClocksVert)/2;
+    updateScoreDisplay();
+}
+
+function updateScoreDisplay(){
+    document.getElementById('score-text').textContent = "Score: "+score;
+}
 
 window.addEventListener("load", function(){
     //fill the screen with clocks based on current number of pixels
@@ -66,6 +80,8 @@ window.addEventListener("load", function(){
     document.getElementById('hard-reset-button').addEventListener('click', hardResetClocks);
     //monitor music button
     document.getElementById('music-button').addEventListener('click', toggleMusic);
+    //monitor for music changes
+    document.getElementById('music-picker').addEventListener('change', musicChangeHandler);
 });
 
 //keep the table centered as the window gets moved

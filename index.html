@@ -18,6 +18,7 @@
 
 </head>
 <body id="body">
+<h3 id="score-text">Score: 0</h3>
 <div id="speed-div">
     <label for="speed-input" class="form-label" id="speed-label">Time Multiplier | 1x | Real Time</label>
     <input type="range" class="form-range" min="1" max="999" id="speed-input" value="1">
@@ -62,11 +63,11 @@
                 </div>
                 <div class="form-group">
                     <label for="music-picker">Music Picker</label>
-                    <select class="form-select" type="text" id="music-picker" placeholder="1">
-                        <option selected value="0">Default Song</option>
-                        <option value="1">Song 1</option>
-                        <option value="2">Song 2</option>
-                        <option value="3">Song 3</option>
+                    <select class="form-select" id="music-picker">
+                        <option selected value="video_game_song.mp3">Video Game Songs</option>
+                        <option value="rickroll.mp3">Nothing At All</option>
+                        <option value="kai_suggs.mp3">Kai Suggusius III</option>
+                        <option value="ultrakill.mp3">Kill Big Ultra - Sorensen</option>
                     </select>
                 </div>
             </div>
@@ -82,7 +83,7 @@
 </div>
 
 <audio controls hidden muted id="music" loop>
-    <source src="song.mp3" type="audio/mpeg">
+    <source src="songs/video_game_song.mp3" type="audio/mpeg">
 </audio>
 </body>
 </html>

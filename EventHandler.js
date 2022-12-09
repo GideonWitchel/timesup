@@ -15,6 +15,7 @@ function cycleColor(targetCell){
     }
     //update the color to the new one
     background.style.backgroundColor = colors[colorIndex];
+    addScore();
 };
 
 function clickColorHandler(e){
@@ -84,6 +85,8 @@ function resetClocks(){
 function hardResetClocks(){
     numClocksVert = 2;
     numClocksHoriz = 2;
+    score = 0;
+    updateScoreDisplay();
     resetClocks();
 }
 
@@ -123,12 +126,9 @@ function bigRainbowClocks(colorNum){
 
 //Music
 function toggleMusic(){
-    //only 1 cookie, muted, for now
-    //if I add more cookies I will need to add a real cookie manager
-    let musicMuted = document.cookie.split("=")[1];
     let musicObject = document.getElementById("music");
     //if it is muted, unmute and play
-    if(musicMuted){
+    if(musicObject.muted){
         musicObject.muted = false;
         musicObject.play();
     }
@@ -139,4 +139,16 @@ function toggleMusic(){
     }
     //update bookie
     document.cookie="muted="+musicObject.muted;
+}
+
+function musicChangeHandler(){
+    changeTrack(document.getElementById('music-picker').value);
+}
+
+function changeTrack(trackName){
+    document.getElementById("music").src = "songs/"+trackName;
+
+    //I don't know why you need to toggle twice, but you do
+    toggleMusic();
+    toggleMusic();
 }
