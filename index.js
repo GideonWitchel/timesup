@@ -31,6 +31,9 @@ let freezeState = false;
 //currently multiplier is just numClocksVert
 let score = 0;
 
+//zoom in the table (css)
+let zoom = 1;
+
 //I hate that this is RGB and not hex but that's how chrome displays it
 //I need to match chrome for later comparisons when cycling
 const colors = ["rgb(231, 76, 60)", "rgb(243, 156, 18)", "rgb(244, 208, 63)", "rgb(46, 204, 113)", "rgb(41, 128, 185)", "rgb(142, 68, 173)"];
@@ -82,6 +85,12 @@ window.addEventListener("load", function(){
     document.getElementById('music-button').addEventListener('click', toggleMusic);
     //monitor for music changes
     document.getElementById('music-picker').addEventListener('change', musicChangeHandler);
+    //monitor for secret riddle input
+    document.getElementById('secret-submit').addEventListener('click', secretSubmitHandler);
+    //monitor secret settings of clock values
+    document.getElementById('num-clocks-vert-input').addEventListener('change', updateClocksManual);
+    document.getElementById('num-clocks-horiz-input').addEventListener('change', updateClocksManual);
+
 });
 
 //keep the table centered as the window gets moved

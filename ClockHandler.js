@@ -101,3 +101,7 @@ function setupClocks(){
 
     numClocks = numClocksHoriz*numClocksVert;
 };
+
+function updateClocksManual(){
+
+}

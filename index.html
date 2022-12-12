@@ -9,6 +9,7 @@
     <script type="text/javascript" src="ClockHandler.js"></script>
     <script type="text/javascript" src="EventHandler.js"></script>
     <script type="text/javascript" src="WindowHandler.js"></script>
+    <script type="text/javascript" src="secretFormHandler.js"></script>
     <script type="text/javascript" src="index.js"></script>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -55,16 +56,23 @@
 
             <div class="modal-body">
                 <p>Welcome! <b>Click</b> the <b>clocks</b> and <i>enjoy</i> the <i>tunes</i>.</p>
-                <p class="small">There are no <a id="secret-link" href="javascript:void(0)" onClick="document.getElementById('secret-text').style.display='inline-block';" >secrets</a> here...</p>
+                <p class="small">There are no <a id="secret-link" href="javascript:void(0)" onClick="document.getElementById('secret-text').style.display='inline-block';">secrets</a> here...</p>
                 <div id="secret-text" style="display: none;">
-                    <h5>What Am I?</h5>
-                    <p>I have hands but no fingers</p>
+                    <h5 style="text-align: center;">What Am I?</h5>
+                    <p>I have hands but <i class="primary">no fingers</i></p>
                     <p>✅😐 but ❌👀</p>
-                    <p>I cannot wave and cannot frown</p>
-                    <p>I do not walk but move around</p>
-                    <p>I'm usually round</p>
-                    <br>z
+                    <p>I cannot <sup>wave</sup> and cannot <sub>frown</sub></p>
+                    <p>I do not walk but <b>move <span style="font-size: 2em;">around</span></b></p>
+                    <p>I'm usually <mark>round</mark></p>
+
+                    <label for="secret-password">Answer: </label>
+                    <input title="Enter a single lowercase word" autocomplete="off" id="secret-password" type="password" required />
+                    <input type="submit" value="Submit" id="secret-submit"/>
+                    <p style="color: red;" id="secret-error"></p>
+
+                    <br>
                 </div>
+
                 <br>
                 <div class="form-group">
                     <label for="speed-input-manual">Clock Speed Multiplier</label>
@@ -78,6 +86,19 @@
                         <option value="kai_suggs.mp3">Kai Suggusius III</option>
                         <option value="ultrakill.mp3">Kill Big Ultra - Sorensen</option>
                     </select>
+                </div>
+
+                <div id="secret-menus" style="display: none;">
+                    <br>
+                    <h5>Secret Settings</h5>
+                    <div class="form-group">
+                        <label for="num-clocks-vert-input">Number of Clocks Vertically</label>
+                        <input class="form-control" type="text" id="num-clocks-vert-input" placeholder="2">
+                    </div>
+                    <div class="form-group">
+                        <label for="num-clocks-horiz-input">Number of Clocks Horizontally</label>
+                        <input class="form-control" type="text" id="num-clocks-horiz-input" placeholder="2">
+                    </div>
                 </div>
             </div>
 

@@ -37,8 +37,8 @@ function setPadding(){
     //may be changed or dynamically assigned based on screen size in the future
     //right now this only changes once at the start, so if the window isn't fullscreen and/or changes size it will break
     //running it with clock updates or when the browser detects a change in screen size could fix this problem
-    let divVertPadding = (winYem-(numClocksVert*10))/2;
-    let divHorizPadding = (winXem-(numClocksHoriz*10))/2;
+    let divVertPadding = (winYem-(numClocksVert*10*zoom))/2;
+    let divHorizPadding = (winXem-(numClocksHoriz*10*zoom))/2;
     document.getElementById("clocks").style.margin = ""+divVertPadding+"em "+divHorizPadding+"em";
 
 };
