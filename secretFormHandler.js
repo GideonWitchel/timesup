@@ -5,7 +5,7 @@ function getErrorMessage(input){
     if(input.length < 2){
         return "Too Short";
     }
-    if(input.length > 12){
+    if(input.length > 16){
         return "Too Long";
     }
     if(input.match(/[0-9]/g)){

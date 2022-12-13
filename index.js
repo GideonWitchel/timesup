@@ -42,6 +42,7 @@ const colors = ["rgb(231, 76, 60)", "rgb(243, 156, 18)", "rgb(244, 208, 63)", "r
 function fullClockCode(rowNum, colNum){
     //start the clock with the correct time
     let timeAngles = currentTimeAngles(timeOffset);
+
     return `
          <div class="clock" id="clock-`+rowNum+"-"+colNum+`">
              <div class="clock-main">

@@ -14,6 +14,7 @@ function createNewCol(rowNum, colNum){
 };
 
 function setPadding(){
+
     //get window pixel values and convert to em because that's how I'm doing clock sizes
     let winXem = window.innerWidth/ parseFloat(
         getComputedStyle(
