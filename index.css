@@ -19,12 +19,10 @@ table{
 }
 
 tr{
-    width: 10em;
-    height: 10.1em;
+    height: 10em;
 }
 td{
-    width: 11em;
-    height: 10.1em;
+    width: 10em;
 }
 
 .form-range{
@@ -51,6 +49,7 @@ td{
     border-color: wheat;
     background-color: burlywood;
     border-radius: 0em 0em 1em 0em;
+    z-index: 10;
 }
 
 #speed-div{
@@ -72,10 +71,17 @@ td{
 */
 
 .clock {
+    position: relative;
     height: 10em;
     width: 10em;
     background-color: #333;
     border-radius: 50%;
+}
+
+.clock-empty {
+    position: relative;
+    height: 10em;
+    width: 10em;
 }
 
 .clock-main {
@@ -97,7 +103,7 @@ td{
     width: 0.75em;
     background-color: #666;
     border-radius: 50%;
-    z-index: 1;
+    z-index: 3;
 }
 
 .clock-minute{
@@ -119,6 +125,7 @@ td{
     background-color: blue;
     border-radius: 1em;
     transform-origin: 50% 2.5em;
+    z-index: 2;
 }
 .clock-second{
     position:relative;
@@ -129,6 +136,7 @@ td{
     background-color: darkslategray;
     border-radius: 1em;
     transform-origin: 50% 3.5em;
+    z-index: 1;
 }
 
 /*

@@ -6,7 +6,8 @@ function cycleColor(targetCell){
     if(background.style.backgroundColor){
         //if it's the last color, delete the clock instead of toggling
         if(colors.indexOf(background.style.backgroundColor) === colors.length-1){
-            targetCell.innerHTML = "";
+            //this can't be an empty div because it causes the table to collapse a bit
+            targetCell.innerHTML = "<div class='clock-empty'></div>";
             numClocks--;
             return;
         }
@@ -98,8 +99,8 @@ function resetClocks(){
 }
 
 function hardResetClocks(){
-    numClocksVert = 2;
-    numClocksHoriz = 2;
+    numClocksVert = 1;
+    numClocksHoriz = 1;
     score = 0;
     updateScoreDisplay();
     resetClocks();

@@ -7,9 +7,9 @@ the table is called clocks
 */
 
 //this is also the number of rows, because rows are seen as the number of clocks stacked vertically
-let numClocksVert = 2;
+let numClocksVert = 1;
 //this is also the number of columns for the same reason
-let numClocksHoriz = 2;
+let numClocksHoriz = 1;
 
 //if this is anything other than 1, the clocks will obviously not be accurate
 let timeMultiplier = 1;
@@ -31,14 +31,14 @@ let freezeState = false;
 //currently multiplier is just numClocksVert
 let score = 0;
 
-//zoom in the table (css)
-let zoom = 1;
+//Size in em of clocks
+let clockSize = 10;
 
 //I hate that this is RGB and not hex but that's how chrome displays it
 //I need to match chrome for later comparisons when cycling
 const colors = ["rgb(231, 76, 60)", "rgb(243, 156, 18)", "rgb(244, 208, 63)", "rgb(46, 204, 113)", "rgb(41, 128, 185)", "rgb(142, 68, 173)"];
 
-//I know this isn't 100% secure, but it's really convenient for now
+//I know this with innerHTML isn't 100% secure, but it's really convenient for now
 function fullClockCode(rowNum, colNum){
     //start the clock with the correct time
     let timeAngles = currentTimeAngles(timeOffset);
