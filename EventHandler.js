@@ -127,6 +127,11 @@ function bigRainbowClocks(colorNum){
     //if at end of array, end with 1 bigger sized sides for the clocks
     if(colorNum >= colors.length)
     {
+        //if at max, end game
+        if(colorNum >= colorMax){
+            endGame();
+            return;
+        }
         numClocksVert += 1;
         numClocksHoriz += 1;
         setupClocks();
@@ -171,4 +176,18 @@ function changeTrack(trackName){
     //I don't know why you need to toggle twice, but you do
     toggleMusic();
     toggleMusic();
+}
+
+
+//ending
+function endGame(){
+    resetClocks();
+    $(document).ready(function() {
+        $("#overlay").show();
+
+        $("#overlay").click(function() {
+            $("#overlay").hide();
+            hardResetClocks();
+        });
+    });
 }

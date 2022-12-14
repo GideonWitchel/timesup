@@ -13,16 +13,10 @@ function currentTimeAngles(timeOffset){
     //account for time zone changes
     times.hour += timeOffset;
 
-    //triple equals is never true after the val is changed
-    if(timeMultiplier == 1) {
-        //override hour with real local time
-        times.hour = new Date().getHours();
-    }
-
     //convert segments into rotational values
     times.second = (times.second % 60) * 6;
     times.minute = (times.minute % 60) * 6;
-    times.hour = (times.hour % 24) * 15;
+    times.hour = (times.hour % 12) * 30;
     return times;
 };
 

@@ -14,8 +14,8 @@ let numClocksHoriz = 1;
 //if this is anything other than 1, the clocks will obviously not be accurate
 let timeMultiplier = 1;
 
-//6 is just UTC, temporary
-const timeOffset = +12;
+//-6 is just UTC, temporary
+const timeOffset = -6;
 
 //How often the clocks will update to reflect the backend time (in milliseconds)
 const tickSpeed = 50;
@@ -33,6 +33,9 @@ let score = 0;
 
 //Size in em of clocks
 let clockSize = 10;
+
+//max height of clocks (cannot reach this, stops 1 before)
+let colorMax = 6;
 
 //I hate that this is RGB and not hex but that's how chrome displays it
 //I need to match chrome for later comparisons when cycling
@@ -65,6 +68,11 @@ function updateScoreDisplay(){
 }
 
 window.addEventListener("load", function(){
+    //get rid of the initial overlay and loading message
+    $("#overlay").hide();
+    document.getElementById("overlay-title").textContent = "Fin.";
+    document.getElementById("overlay-body").textContent = "Click anywhere to reset";
+
     //fill the screen with clocks based on current number of pixels
     setupClocks();
 
