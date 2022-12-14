@@ -1,3 +1,5 @@
+//<!-- ****  JavaScript Feature submission **** -->
+//<!-- Parser for time into clock angles with key-value pairs-->
 function currentTimeAngles(timeOffset){
     //timeMultiplier = $("#speedInput").sl;
     //console.log(timeMultiplier);
@@ -13,7 +15,7 @@ function currentTimeAngles(timeOffset){
 
     //triple equals is never true after the val is changed
     if(timeMultiplier == 1) {
-        //override hour with local time because currently broken
+        //override hour with real local time
         times.hour = new Date().getHours();
     }
 
@@ -100,8 +102,21 @@ function setupClocks(){
     }
 
     numClocks = numClocksHoriz*numClocksVert;
+
+    //<!-- ****  jQuery substitute for Bootstrap Feature submission **** -->
+    //cycle colors when clicked
+    $(document).ready(function(){
+        $(".clock").click(function(){
+            clickColorHandlerJquery(this);
+        });
+    });
 };
 
-function updateClocksManual(){
-
+function updateClocksManualVert(){
+    numClocksVert = document.getElementById("num-clocks-vert-input").value;
+    resetClocks();
+}
+function updateClocksManualHoriz(){
+    numClocksHoriz = document.getElementById("num-clocks-horiz-input").value;
+    resetClocks();
 }

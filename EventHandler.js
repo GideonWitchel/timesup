@@ -18,6 +18,7 @@ function cycleColor(targetCell){
     addScore();
 };
 
+/*
 function clickColorHandler(e){
     if(freezeState){return;}
 
@@ -34,6 +35,20 @@ function clickColorHandler(e){
         //or do nothing if it does exist and the user just didn't click it
         return;
     }
+
+    //navigate up to the table location from whatever the target it
+    while(clicked.className !== ""){
+        clicked = clicked.parentNode;
+    }
+
+    cycleColor(clicked);
+    checkSpecialEvents();
+};
+*/
+
+//This only allows clocks to be deleted, not added back
+function clickColorHandlerJquery(clicked){
+    if(freezeState){return;}
 
     //navigate up to the table location from whatever the target it
     while(clicked.className !== ""){
@@ -124,6 +139,8 @@ function bigRainbowClocks(colorNum){
     setTimeout(() => bigRainbowClocks(colorNum), 100);
 };
 
+<!-- ****  JavaScript Feature submission **** -->
+<!-- Toggle Button for Music -->
 //Music
 function toggleMusic(){
     let musicObject = document.getElementById("music");
@@ -131,11 +148,13 @@ function toggleMusic(){
     if(musicObject.muted){
         musicObject.muted = false;
         musicObject.play();
+        document.getElementById("music-icon").src = "icons/audio.png";
     }
     //if it is not muted, mute and pause
     else{
         musicObject.muted = true;
         musicObject.pause();
+        document.getElementById("music-icon").src = "icons/noaudio.png";
     }
     //update bookie
     document.cookie="muted="+musicObject.muted;

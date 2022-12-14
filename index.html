@@ -16,7 +16,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-
 </head>
 <body id="body">
 <h3 id="score-text">Score: 0</h3>
@@ -30,25 +29,32 @@
 <table id="clocks">
     <tr id="clocks-0"></tr>
 </table>
+
+<!-- ****  Bootstrap Feature submission **** -->
+<!-- Buttons -->
 <div class="btn-toolbar fixed-bottom justify-content-between" role="toolbar">
     <div class="btn-group col-2" role="group">
-        <button type="button col-1" class="btn btn-danger" data-toggle="button" aria-pressed="false" autocomplete="off" id="hard-reset-button">
+        <button type="button" class="btn btn-danger col-1" data-toggle="button" aria-pressed="false" id="hard-reset-button">
             Reset
         </button>
-        <button type="button col-1" class="btn btn-warning" data-toggle="button" aria-pressed="false" autocomplete="off" id="reset-button">
+        <button type="button" class="btn btn-warning col-1" data-toggle="button" aria-pressed="false" id="reset-button">
             Reload
         </button>
     </div>
 
-    <div class="btn-group col-6" role="group">
-        <button type="button" class="btn btn-primary col-5" data-toggle="button" aria-pressed="false" autocomplete="off" data-bs-toggle="modal" data-bs-target="#settings-modal">
+    <div class="btn-group col-2" role="group">
+        <button type="button" class="btn btn-primary col-1" data-toggle="button" aria-pressed="false" data-bs-toggle="modal" data-bs-target="#settings-modal">
             Settings
         </button>
-        <button type="button" class="btn btn-info col-1" data-toggle="button" aria-pressed="false" autocomplete="off" id="music-button">
+        <button type="button" class="btn btn-info col-1" data-toggle="button" aria-pressed="false" id="music-button">
             Music
+            <img id="music-icon" src="icons/noaudio.png" width="25" height="25"/>
         </button>
     </div>
 </div>
+
+<!-- ****  Bootstrap Feature submission **** -->
+<!-- Modal -->
 <div class="modal" id="settings-modal">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -81,6 +87,8 @@
                 </div>
 
                 <br>
+                <!-- ****  Bootstrap Feature submission **** -->
+                <!-- Bootstrap Form -->
                 <div class="form-group">
                     <label for="speed-input-manual">Clock Speed Multiplier</label>
                     <input class="form-control" type="text" id="speed-input-manual" placeholder="1">

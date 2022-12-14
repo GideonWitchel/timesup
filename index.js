@@ -72,8 +72,12 @@ window.addEventListener("load", function(){
     //this will asynchronously repeat forever
     updateClock();
 
-    //cycle colors when clicked
-    document.getElementById('clocks').addEventListener('click', clickColorHandler);
+    //deprecated clock click monitor that can add them back
+    //replaced by jquery in setupClocks()
+    //document.getElementById('clocks').addEventListener('click', clickColorHandler);
+
+    //<!-- ****  JavaScript Feature submission **** -->
+    //<!-- Event Listeners -->
     //monitor speed slider
     document.getElementById('speed-input').addEventListener('change', updateSpeed);
     //monitor speed settings menu
@@ -89,8 +93,8 @@ window.addEventListener("load", function(){
     //monitor for secret riddle input
     document.getElementById('secret-submit').addEventListener('click', secretSubmitHandler);
     //monitor secret settings of clock values
-    document.getElementById('num-clocks-vert-input').addEventListener('change', updateClocksManual);
-    document.getElementById('num-clocks-horiz-input').addEventListener('change', updateClocksManual);
+    document.getElementById('num-clocks-vert-input').addEventListener('change', updateClocksManualVert);
+    document.getElementById('num-clocks-horiz-input').addEventListener('change', updateClocksManualHoriz);
 
 });
 
