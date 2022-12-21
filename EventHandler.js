@@ -106,7 +106,6 @@ function hardResetClocks(){
     resetClocks();
 }
 
-
 //Rainbow Reset
 function checkSpecialEvents(){
     if (numClocks === 0){
@@ -128,8 +127,9 @@ function bigRainbowClocks(colorNum){
     if(colorNum >= colors.length)
     {
         //if at max, end game
-        if(colorNum >= colorMax){
+        if(numClocksVert >= clocksMax){
             endGame();
+            freezeState = false;
             return;
         }
         numClocksVert += 1;

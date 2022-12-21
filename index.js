@@ -34,8 +34,8 @@ let score = 0;
 //Size in em of clocks
 let clockSize = 10;
 
-//max height of clocks (cannot reach this, stops 1 before)
-let colorMax = 6;
+//max height of clocks
+let clocksMax = 5;
 
 //I hate that this is RGB and not hex but that's how chrome displays it
 //I need to match chrome for later comparisons when cycling
