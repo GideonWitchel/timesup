@@ -1,2 +1,2 @@
 # timesup
-One Page Challenge
+A simple clicking game with clocks that get bigger and bigger. The game runs entirely in browser. I'm sure there are no secrets...
